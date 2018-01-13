@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "JamanyaApps Angular2 Skeleton project",
     "scripts": {
-        "start": "tsc && concurrrently \"tsc -w\" \"lite-server\" ",
+        "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
         "lit e": "lite-server",
         "tsc": "tsc",
         "tsc:w": "tsc -w"
