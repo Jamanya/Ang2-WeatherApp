@@ -20,20 +20,27 @@ var WeatherService = (function () {
     }
     WeatherService.prototype.getCurrentLocation = function () {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (pos) {
-                console.log("Position: ", pos.coords.latitude, ",", pos.coords.longitude);
-                return [pos.coords.latitude, pos.coords.longitude];
-            }, function (err) { return console.error("Unable to get the position - ", err); });
+            return Observable_1.Observable.create(function (observer) {
+                navigator
+                    .geolocation
+                    .getCurrentPosition(function (pos) {
+                    observer.next(pos);
+                }),
+                    function (err) {
+                        return Observable_1.Observable.throw(err);
+                    };
+            });
         }
         else {
-            console.error("GeoLocation is not available");
-            return [0, 0];
+            return Observable_1.Observable.throw("GeoLocation is not available");
         }
     };
     WeatherService.prototype.getCurrentWeather = function (lat, long) {
         var url = constants_1.FORCAST_ROOT + constants_1.FORCAST_KEY + "/" + lat + "," + long;
         var queryParams = "?callback=JSONP_CALLBACK";
-        return this.jsonp.get(url + queryParams)
+        return this
+            .jsonp
+            .get(url + queryParams)
             .map(function (data) { return data.json(); })
             .catch(function (err) {
             console.error("unable to get weather data - ", err);
