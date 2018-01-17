@@ -13,16 +13,32 @@ var weather_service_1 = require('../service/weather.service');
 var weather_1 = require('../model/weather');
 var WeatherComponent = (function () {
     function WeatherComponent(service) {
-        var _this = this;
         this.service = service;
         this.weatherData = new weather_1.Weather(null, null, null, null, null);
+    }
+    WeatherComponent.prototype.ngOnInit = function () {
+        this.getCurrentLocation();
+    };
+    WeatherComponent.prototype.getCurrentLocation = function () {
+        var _this = this;
         this.service.getCurrentLocation()
             .subscribe(function (position) {
             _this.pos = position;
-            _this.service.getCurrentWeather(_this.pos.coords.latitude, _this.pos.coords.longitude)
-                .subscribe(function (weather) { return console.log(weather); }, function (err) { return console.error(err); });
+            _this.getCurrentWeather();
         }, function (err) { return console.error(err); });
-    }
+    };
+    WeatherComponent.prototype.getCurrentWeather = function () {
+        var _this = this;
+        this.service.getCurrentWeather(this.pos.coords.latitude, this.pos.coords.longitude)
+            .subscribe(function (weather) {
+            _this.weatherData.temp = weather["currently"]["temperature"],
+                _this.weatherData.summary = weather["currently"]["summary"],
+                _this.weatherData.wind = weather["currently"]["windSpeed"],
+                _this.weatherData.humidity = weather["currently"]["humidity"],
+                _this.weatherData.icon = weather["currently"]["icon"];
+            console.log("Weather: ", _this.weatherData); //todo: REMOVE
+        }, function (err) { return console.error(err); });
+    };
     WeatherComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
