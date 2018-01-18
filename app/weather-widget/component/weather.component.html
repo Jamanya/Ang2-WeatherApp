@@ -1,5 +1,5 @@
 <div class="card" (click)="toggleUnits()" [ngStyle]="setWeatherStyles()">
-    <div class="card-header">
+    <div class="card-header" [class.invisible]="!dataReceived">
         <div class="col-xs-8">
             <p>{{ currentLocation }}</p>
         </div>
@@ -11,7 +11,7 @@
         <canvas id="icon"></canvas>
         <p>{{ weatherData.summary }}</p>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" [class.invisible]="!dataReceived">
         <div class="col-xs-5">
             <p>Wind</p>
             <p>{{ weatherData.wind | speedUnit: currentSpeedUnit }}</p>

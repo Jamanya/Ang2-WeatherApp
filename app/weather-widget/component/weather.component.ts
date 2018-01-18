@@ -14,6 +14,8 @@ declare var Skycons: any;
     styleUrls: [ 'weather.component.css'],
     providers: [ WeatherService ]
 })
+
+
 export class WeatherComponent implements OnInit {
     pos: Position;
     weatherData = new Weather(null, null, null, null, null);
@@ -21,6 +23,7 @@ export class WeatherComponent implements OnInit {
     currentTempUnit = "fahrenheit";
     currentLocation = "";
     icons = new Skycons();
+    dataReceived = false;
 
     constructor(private service: WeatherService) { }
 
@@ -48,6 +51,7 @@ export class WeatherComponent implements OnInit {
                         this.weatherData.icon = weather["currently"]["icon"]
                         console.log("Weather: ", this.weatherData); //todo: REMOVE
                         this.setWeatherIcon();
+                        this.dataReceived = true;
                     },
                     err => console.error(err));
     }
