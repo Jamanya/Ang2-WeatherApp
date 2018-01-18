@@ -4,7 +4,7 @@
             <p>Pittsburgh, PA</p>
         </div>
         <div class="col-xs-4 text-xs-right">
-            <h1>{{ weatherData.temp | number: '.0-0' }}&deg;</h1>
+            <h1>{{ weatherData.temp | tempUnit: currentTempUnit | number: '.0-0' }}&deg;</h1>
         </div>
     </div>
     <div class="card-block">

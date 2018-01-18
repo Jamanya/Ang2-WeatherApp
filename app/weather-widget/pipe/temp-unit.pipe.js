@@ -13,9 +13,12 @@ var TempUnitPipe = (function () {
     function TempUnitPipe() {
     }
     TempUnitPipe.prototype.transform = function (temp, unitType) {
-        switch (unitType) {
-            case "fahrenheit":
-                return;
+        if (unitType == "celsius") {
+            var celsius = (temp - 32) * 0.5556;
+            return celsius;
+        }
+        else {
+            return temp;
         }
     };
     TempUnitPipe = __decorate([

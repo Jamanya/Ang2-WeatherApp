@@ -17,9 +17,6 @@ var SpeedUnitPipe = (function () {
             case "mph":
                 var miles = speed * 1.6;
                 return miles + "mph";
-            case "knots":
-                var knots = speed * 0.868976242;
-                return knots + "knots";
             default:
                 return speed + "kph";
         }

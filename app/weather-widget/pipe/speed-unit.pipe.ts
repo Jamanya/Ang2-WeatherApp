@@ -9,9 +9,6 @@ export class SpeedUnitPipe implements PipeTransform {
             case "mph":
                 const miles = speed * 1.6;
                 return miles + "mph";
-            case "knots":
-                const knots = speed * 0.868976242;
-                return knots + "knots";
             default: 
                 return speed + "kph";
         }
