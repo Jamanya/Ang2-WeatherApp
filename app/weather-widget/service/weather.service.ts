@@ -43,14 +43,14 @@ export class WeatherService {
     }
     getLocationName(lat : number, long : number) : Observable < any > {
         const url = GOOGLE_ROOT;
-        const queryParams = "?latlng=" + lat + "," + long + "key=" + GOOGLE_KEY;
+        const queryParams = "?latlng=" + lat + "," + long + "&key=" + GOOGLE_KEY;
 
         return this
             .http
             .get(url + queryParams)
             .map(loc => loc.json())
             .catch(err => {
-                console.error("unable to let location - ", err);
+                console.error("unable to get location - ", err);
                 return Observable.throw(err);
             })
     }

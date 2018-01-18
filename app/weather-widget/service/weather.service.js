@@ -50,13 +50,13 @@ var WeatherService = (function () {
     };
     WeatherService.prototype.getLocationName = function (lat, long) {
         var url = constants_1.GOOGLE_ROOT;
-        var queryParams = "?latlng=" + lat + "," + long + "key=" + constants_1.GOOGLE_KEY;
+        var queryParams = "?latlng=" + lat + "," + long + "&key=" + constants_1.GOOGLE_KEY;
         return this
             .http
             .get(url + queryParams)
             .map(function (loc) { return loc.json(); })
             .catch(function (err) {
-            console.error("unable to let location - ", err);
+            console.error("unable to get location - ", err);
             return Observable_1.Observable.throw(err);
         });
     };

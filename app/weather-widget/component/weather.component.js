@@ -17,6 +17,7 @@ var WeatherComponent = (function () {
         this.weatherData = new weather_1.Weather(null, null, null, null, null);
         this.currentSpeedUnit = "mph";
         this.currentTempUnit = "fahrenheit";
+        this.currentLocation = "";
     }
     WeatherComponent.prototype.ngOnInit = function () {
         this.getCurrentLocation();
@@ -27,6 +28,7 @@ var WeatherComponent = (function () {
             .subscribe(function (position) {
             _this.pos = position;
             _this.getCurrentWeather();
+            _this.getLocationName();
         }, function (err) { return console.error(err); });
     };
     WeatherComponent.prototype.getCurrentWeather = function () {
@@ -40,6 +42,35 @@ var WeatherComponent = (function () {
                 _this.weatherData.icon = weather["currently"]["icon"];
             console.log("Weather: ", _this.weatherData); //todo: REMOVE
         }, function (err) { return console.error(err); });
+    };
+    WeatherComponent.prototype.getLocationName = function () {
+        var _this = this;
+        this.service.getLocationName(this.pos.coords.latitude, this.pos.coords.longitude)
+            .subscribe(function (location) {
+            console.log(location); //TODO: REMOVE
+            _this.currentLocation = location["results"][2]["formatted_address"];
+            console.log("Name: ", _this.currentLocation);
+        });
+    };
+    WeatherComponent.prototype.toggleUnits = function () {
+        this.toggleTempUnits();
+        this.toggleSpeedUnits();
+    };
+    WeatherComponent.prototype.toggleTempUnits = function () {
+        if (this.currentTempUnit == "fahrenheit") {
+            this.currentTempUnit = "celsius";
+        }
+        else {
+            this.currentTempUnit = "fahrenheit";
+        }
+    };
+    WeatherComponent.prototype.toggleSpeedUnits = function () {
+        if (this.currentSpeedUnit == "kph") {
+            this.currentSpeedUnit = "mph";
+        }
+        else {
+            this.currentSpeedUnit = "kph";
+        }
     };
     WeatherComponent = __decorate([
         core_1.Component({
