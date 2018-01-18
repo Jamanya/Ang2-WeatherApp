@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 import { Weather } from '../model/weather';
+import { WEATHER_COLORS } from '../constants/constants';
+
+//this is just to stop the IDE from bitching about the Skycons not having a 
+// typescript def.  it will compile to js at runtime 
+declare var Skycons: any;
 
 @Component ({
     moduleId: module.id,
@@ -15,6 +20,7 @@ export class WeatherComponent implements OnInit {
     currentSpeedUnit = "mph";
     currentTempUnit = "fahrenheit";
     currentLocation = "";
+    icons = new Skycons();
 
     constructor(private service: WeatherService) { }
 
@@ -41,6 +47,7 @@ export class WeatherComponent implements OnInit {
                         this.weatherData.humidity = weather["currently"]["humidity"],
                         this.weatherData.icon = weather["currently"]["icon"]
                         console.log("Weather: ", this.weatherData); //todo: REMOVE
+                        this.setWeatherIcon();
                     },
                     err => console.error(err));
     }
@@ -60,17 +67,29 @@ export class WeatherComponent implements OnInit {
     }
 
     toggleTempUnits() {
-        if(this.currentTempUnit == "fahrenheit") {
-            this.currentTempUnit = "celsius"
-        } else { 
-            this.currentTempUnit = "fahrenheit";        }
+        (this.currentTempUnit == "fahrenheit") ?
+            this.currentTempUnit = "celsius" :
+            this.currentTempUnit = "fahrenheit";
     }
 
     toggleSpeedUnits() {
-        if(this.currentSpeedUnit == "kph") {
-            this.currentSpeedUnit = "mph";
-        } else { 
-            this.currentSpeedUnit = "kph";
-        } 
+        (this.currentSpeedUnit == "kph") ? 
+        this.currentSpeedUnit = "mph" : 
+        this.currentSpeedUnit = "kph";
+    }
+
+    setWeatherIcon() {
+        this.icons.add("icon", this.weatherData.icon);
+        this.icons.play();
+    }
+
+    setWeatherStyles(): Object {
+        if(this.weatherData.icon) {
+            this.icons.color = WEATHER_COLORS[this.weatherData.icon]["color"];
+            return WEATHER_COLORS[this.weatherData.icon];
+        } else {
+            this.icons.color = WEATHER_COLORS["default"]["color"];
+            return WEATHER_COLORS["default"];
+        }
     }
  } 

@@ -5,13 +5,11 @@
 .card-header,
 .card-footer {
   border: 0;
-  border-radius: 0;
-  background-color: #00BCD4;
-  color: #FFF;
 }
 .card-header,
 .card-footer {
     padding: 1rem .5rem;
+    background-color: transparent; 
 }
 .card-block {
     padding: 3rem;
